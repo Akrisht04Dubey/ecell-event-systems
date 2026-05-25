@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Startup Weekend 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Primary navigation">
+        <a class="brand" href="#home" aria-label="Entrepreneurship Cell home">
+          <span class="brand-mark">EC</span>
+          <span class="brand-name">ENTREPRENEURSHIP_CELL</span>
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-links" data-nav-links>
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#team">Team members</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="eyebrow">Upcoming innovation event</p>
+          <h1 id="hero-title" data-live-key="eventTitle">Startup Weekend 2026</h1>
+          <p class="hero-tagline" data-live-key="eventTagline">
+            Build bold ideas, meet future co-founders, and pitch your startup in
+            one high-energy weekend.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button primary" href="#registration">Register now</a>
+            <a class="button ghost" href="#event">View event</a>
+          </div>
+
+          <div class="hero-stats" aria-label="Event highlights">
+            <div>
+              <span data-live-key="eventDays">3</span>
+              <small>Days</small>
+            </div>
+            <div>
+              <span>40+</span>
+              <small>Mentors</small>
+            </div>
+            <div>
+              <span>100+</span>
+              <small>Participants</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section about" id="about">
+        <div class="section-heading">
+          <p class="eyebrow">About the event</p>
+          <h2>Turn an idea into a startup-ready pitch.</h2>
+        </div>
+        <div class="about-grid">
+          <article class="about-copy">
+            <p>
+              Startup Weekend 2026 brings students, developers, designers,
+              business thinkers, and mentors together to create early-stage
+              startup concepts from scratch.
+            </p>
+            <p>
+              Participants form teams, validate problems, build prototypes, and
+              present their final pitch to a panel of founders, investors, and
+              faculty mentors.
+            </p>
+          </article>
+          <div class="event-meta" aria-label="Event details">
+            <div>
+              <span>Date</span>
+              <strong data-live-key="eventDate">April 10-12, 2026</strong>
+            </div>
+            <div>
+              <span>Venue</span>
+              <strong data-live-key="eventVenue">Innovation Hub Auditorium</strong>
+            </div>
+            <div>
+              <span>Theme</span>
+              <strong data-live-key="eventTheme">Green Tech and Campus Ideas</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section event" id="event">
+        <div class="section-heading">
+          <p class="eyebrow">Startup Weekend 2026</p>
+          <h2>One weekend. Real collaboration. Clear outcomes.</h2>
+        </div>
+
+        <div class="event-cards">
+          <article class="event-card">
+            <span class="card-number">01</span>
+            <h3>Idea Sprint</h3>
+            <p>
+              Share ideas, join a team, define the problem, and plan the first
+              version of your startup concept.
+            </p>
+            <a href="#registration">Join the sprint</a>
+          </article>
+          <article class="event-card">
+            <span class="card-number">02</span>
+            <h3>Prototype Lab</h3>
+            <p>
+              Work with mentors to validate users, sketch workflows, design
+              demos, and prepare your product story.
+            </p>
+            <a href="#team">Meet mentors</a>
+          </article>
+          <article class="event-card">
+            <span class="card-number">03</span>
+            <h3>Pitch Night</h3>
+            <p>
+              Present your startup, receive feedback from judges, and compete
+              for incubation support and recognition.
+            </p>
+            <a href="#contact">Ask a question</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section registration" id="registration">
+        <div class="registration-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Registration</p>
+            <h2>Reserve your seat.</h2>
+          </div>
+
+          <form class="registration-form" data-registration-form>
+            <label>
+              Name
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                required
+              />
+            </label>
+
+            <label>
+              Department / Branch
+              <input
+                type="text"
+                name="department"
+                placeholder="Example: Computer Science"
+                required
+              />
+            </label>
+
+            <label>
+              Institute email
+              <input
+                type="email"
+                name="email"
+                placeholder="name@institute.edu"
+                autocomplete="email"
+                required
+              />
+            </label>
+
+            <label>
+              Year of study
+              <select name="year" required>
+                <option value="">Select year</option>
+                <option>First year</option>
+                <option>Second year</option>
+                <option>Third year</option>
+              </select>
+            </label>
+
+            <button class="button primary" type="submit">Submit registration</button>
+            <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <aside class="editor-panel" aria-labelledby="editor-title">
+          <div>
+            <p class="eyebrow">Live editor</p>
+            <h2 id="editor-title">Update content</h2>
+          </div>
+
+          <form class="editor-form" data-editor-form>
+            <label>
+              Event title
+              <input type="text" name="eventTitle" />
+            </label>
+            <label>
+              Tagline
+              <textarea name="eventTagline" rows="4"></textarea>
+            </label>
+            <div class="two-column">
+              <label>
+                Date
+                <input type="text" name="eventDate" />
+              </label>
+              <label>
+                Venue
+                <input type="text" name="eventVenue" />
+              </label>
+            </div>
+            <label>
+              Theme
+              <input type="text" name="eventTheme" />
+            </label>
+            <div class="two-column">
+              <label>
+                Green
+                <input type="color" name="primaryColor" value="#0f7a3b" />
+              </label>
+              <label>
+                Yellow
+                <input type="color" name="accentColor" value="#f4c430" />
+              </label>
+               </div>
+            <label>
+              Hero image URL
+              <input type="url" name="heroImage" />
+            </label>
+            <div class="editor-actions">
+              <button class="button primary" type="button" data-save-edits>Save</button>
+              <button class="button secondary" type="button" data-reset-edits>Reset</button>
+            </div>
+            <p class="editor-status" data-editor-status role="status" aria-live="polite"></p>
+          </form>
+        </aside>
+      </section>
+
+      <section class="section team" id="team">
+        <div class="section-heading">
+          <p class="eyebrow">Team members</p>
+          <h2>Guided by builders, mentors, and organizers.</h2>
+        </div>
+
+        <div class="team-grid">
+          <article class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80"
+              alt="Portrait of Ananya Rao"
+            />
+            <div>
+              <h3>Ananya Rao</h3>
+              <p>Event Lead</p>
+            </div>
+          </article>
+          <article class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80"
+              alt="Portrait of Rohan Mehta"
+            />
+            <div>
+              <h3>Rohan Mehta</h3>
+              <p>Startup Mentor</p>
+            </div>
+          </article>
+          <article class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80"
+              alt="Portrait of Kavya Nair"
+            />
+            <div>
+              <h3>Kavya Nair</h3>
+              <p>Design Coach</p>
+            </div>
+          </article>
+          <article class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80"
+              alt="Portrait of Arjun Shah"
+            />
+            <div>
+              <h3>Arjun Shah</h3>
+              <p>Technical Coach</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section contact" id="contact">
+        <div class="contact-content">
+          <div class="section-heading">
+            <p class="eyebrow">Contact</p>
+            <h2>Have a question before registering?</h2>
+          </div>
+          <div class="contact-links">
+            <a href="mailto:startupweekend2026@institute.edu">startupweekend2026@institute.edu</a>
+            <a href="tel:+911234567890">+91 12345 67890</a>
+            <a href="#registration">Go to registration</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Startup Weekend. Built for student founders.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
