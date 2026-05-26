@@ -100,25 +100,51 @@ navLinks.addEventListener("click", (event) => {
   }
 });
 
-registrationForm.addEventListener("submit", (event) => {
+registrationForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const formData = new FormData(registrationForm);
-  const name = formData.get("name").trim();
-  const email = formData.get("email").trim();
 
+  const formData = new FormData(registrationForm);
+  const name = formData.get("name") ? formData.get("name").trim() : "";
+  const email = formData.get("email") ? formData.get("email").trim() : "";
+  
+  // Directly grabs the department dropdown value from your form field
+  const departmentSelect = registrationForm.querySelector('select') || document.getElementById('department');
+  const department = departmentSelect ? departmentSelect.value : "General";
+
+  // Quick frontend validation check
   if (!email.includes("@") || !email.includes(".")) {
     formStatus.textContent = "Please enter a valid institute email.";
+    formStatus.style.color = "red";
     return;
   }
 
-  formStatus.textContent = `Thank you, ${name}. Your registration has been received.`;
-  registrationForm.reset();
-});
+  formStatus.textContent = "Processing registration...";
+  formStatus.style.color = "orange";
 
-editorForm.addEventListener("input", () => {
-  const nextSettings = collectEditorSettings();
-  updateLiveContent(nextSettings);
-  editorStatus.textContent = "Preview updated.";
+  try {
+    // This is the missing network bridge sending your payload data to functions/submit.js
+    const response = await fetch('/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, department })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      formStatus.textContent = `Thank you, ${name}. Your registration has been securely saved!`;
+      formStatus.style.color = "green";
+      registrationForm.reset();
+    } else {
+      throw new Error(result.error || "Server rejected save operation");
+    }
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    formStatus.textContent = "Connection issue. Data could not be saved.";
+    formStatus.style.color = "red";
+  }
 });
 
 saveButton.addEventListener("click", () => {
