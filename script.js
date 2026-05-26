@@ -101,14 +101,17 @@ navLinks.addEventListener("click", (event) => {
 });
 
 registrationForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+  event.preventDefault(); // Keeps the page from resetting/reloading
 
+  // 1. Package the form values cleanly
   const formData = new FormData(registrationForm);
   const name = formData.get("name") ? formData.get("name").trim() : "";
   const email = formData.get("email") ? formData.get("email").trim() : "";
+  
+  // This line was missing! It safely reads your HTML department text input box
   const department = formData.get("department") ? formData.get("department").trim() : "General";
 
-  // Quick frontend validation check
+  // 2. Validate email syntax before sending
   if (!email.includes("@") || !email.includes(".")) {
     formStatus.textContent = "Please enter a valid institute email.";
     formStatus.style.color = "red";
@@ -119,7 +122,7 @@ registrationForm.addEventListener("submit", async (event) => {
   formStatus.style.color = "orange";
 
   try {
-    // 1. Fire network request to Cloudflare Functions
+    // 3. Dispatch data across the network to your Cloudflare D1 Backend pipeline
     const response = await fetch('/submit', {
       method: 'POST',
       headers: {
@@ -128,10 +131,10 @@ registrationForm.addEventListener("submit", async (event) => {
       body: JSON.stringify({ name, email, department })
     });
 
-    // 2. Read the server's reply bundle
     const result = await response.json();
 
     if (result.success) {
+      // 4. Safely display success state without refreshing
       formStatus.textContent = `Thank you, ${name}. Your registration has been securely saved!`;
       formStatus.style.color = "green";
       registrationForm.reset();
