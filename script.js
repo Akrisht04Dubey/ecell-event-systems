@@ -119,7 +119,7 @@ registrationForm.addEventListener("submit", async (event) => {
   formStatus.style.color = "orange";
 
   try {
-    // This sends your perfectly mapped payload to your backend function file
+    // 1. Send the database payload
     const response = await fetch('/submit', {
       method: 'POST',
       headers: {
@@ -128,11 +128,22 @@ registrationForm.addEventListener("submit", async (event) => {
       body: JSON.stringify({ name, email, department })
     });
 
+    // 2. Read the server's response correctly inside the loop
     const result = await response.json();
 
     if (result.success) {
       formStatus.textContent = `Thank you, ${name}. Your registration has been securely saved!`;
       formStatus.style.color = "green";
+      registrationForm.reset();
+    } else {
+      throw new Error(result.error || "Server rejected data save");
+    }
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    formStatus.textContent = "Connection issue. Data could not be saved.";
+    formStatus.style.color = "red";
+  }
+});
       registrationForm.reset();
     } else {
       throw new Error(result.error || "Server rejected save operation");
