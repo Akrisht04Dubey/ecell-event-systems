@@ -106,13 +106,6 @@ registrationForm.addEventListener("submit", async (event) => {
   const formData = new FormData(registrationForm);
   const name = formData.get("name") ? formData.get("name").trim() : "";
   const email = formData.get("email") ? formData.get("email").trim() : "";
-  
-  // Directly grabs the department dropdown value from your form field
-  // 1. Grab values from your inputs using their exact names or IDs
-  const name = formData.get("name") ? formData.get("name").trim() : "";
-  const email = formData.get("email") ? formData.get("email").trim() : "";
-  
-  // 2. Change your department line to look for the exact field name instead of a generic select tag:
   const department = formData.get("department") ? formData.get("department").trim() : "General";
 
   // Quick frontend validation check
@@ -123,6 +116,33 @@ registrationForm.addEventListener("submit", async (event) => {
   }
 
   formStatus.textContent = "Processing registration...";
+  formStatus.style.color = "orange";
+
+  try {
+    // This sends your perfectly mapped payload to your backend function file
+    const response = await fetch('/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, department })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      formStatus.textContent = `Thank you, ${name}. Your registration has been securely saved!`;
+      formStatus.style.color = "green";
+      registrationForm.reset();
+    } else {
+      throw new Error(result.error || "Server rejected save operation");
+    }
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    formStatus.textContent = "Connection issue. Data could not be saved.";
+    formStatus.style.color = "red";
+  }
+});
   formStatus.style.color = "orange";
 
   try {
