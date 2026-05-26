@@ -14,8 +14,8 @@ const defaults = {
 
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector("[data-nav-links]");
-const registrationForm = document.getElementById("registration-form") || document.querySelector("[data-registration-form]");
-const formStatus = document.querySelector("[data-form-status]");
+const registrationForm = document.getElementById("registration-form") || document.querySelector(".registration-form") || document.querySelector("form");
+const formStatus = document.getElementById("form-status") || document.querySelector(".form-status") || document.querySelector("[data-form-status]");
 const editorForm = document.querySelector("[data-editor-form]");
 const editorStatus = document.querySelector("[data-editor-status]");
 const saveButton = document.querySelector("[data-save-edits]");
