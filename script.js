@@ -119,7 +119,7 @@ registrationForm.addEventListener("submit", async (event) => {
   formStatus.style.color = "orange";
 
   try {
-    // 1. Send the database payload
+    // 1. Fire network request to Cloudflare Functions
     const response = await fetch('/submit', {
       method: 'POST',
       headers: {
@@ -128,7 +128,7 @@ registrationForm.addEventListener("submit", async (event) => {
       body: JSON.stringify({ name, email, department })
     });
 
-    // 2. Read the server's response correctly inside the loop
+    // 2. Read the server's reply bundle
     const result = await response.json();
 
     if (result.success) {
@@ -136,7 +136,7 @@ registrationForm.addEventListener("submit", async (event) => {
       formStatus.style.color = "green";
       registrationForm.reset();
     } else {
-      throw new Error(result.error || "Server rejected data save");
+      throw new Error(result.error || "Server rejected save");
     }
   } catch (error) {
     console.error("Database connection failed:", error);
