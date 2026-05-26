@@ -108,8 +108,12 @@ registrationForm.addEventListener("submit", async (event) => {
   const email = formData.get("email") ? formData.get("email").trim() : "";
   
   // Directly grabs the department dropdown value from your form field
-  const departmentSelect = registrationForm.querySelector('select') || document.getElementById('department');
-  const department = departmentSelect ? departmentSelect.value : "General";
+  // 1. Grab values from your inputs using their exact names or IDs
+  const name = formData.get("name") ? formData.get("name").trim() : "";
+  const email = formData.get("email") ? formData.get("email").trim() : "";
+  
+  // 2. Change your department line to look for the exact field name instead of a generic select tag:
+  const department = formData.get("department") ? formData.get("department").trim() : "General";
 
   // Quick frontend validation check
   if (!email.includes("@") || !email.includes(".")) {
