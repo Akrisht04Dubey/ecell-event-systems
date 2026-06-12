@@ -101,104 +101,63 @@ navLinks.addEventListener("click", (event) => {
 });
 
 registrationForm.addEventListener("submit", async (event) => {
-  event.preventDefault(); // Keeps the page from resetting/reloading
+    // 1. Instantly stop the browser from refreshing
+    event.preventDefault(); 
 
-  // 1. Package the form values cleanly
-  const formData = new FormData(registrationForm);
-  const name = formData.get("name") ? formData.get("name").trim() : "";
-  const email = formData.get("email") ? formData.get("email").trim() : "";
-  
-  // This line was missing! It safely reads your HTML department text input box
-  const department = formData.get("department") ? formData.get("department").trim() : "General";
+    // 2. Package the form values cleanly
+    const formData = new FormData(registrationForm);
+    const name = formData.get("name") ? formData.get("name").trim() : "";
+    const email = formData.get("email") ? formData.get("email").trim() : "";
+    const department = formData.get("department") ? formData.get("department").trim() : "General";
 
-  // 2. Validate email syntax before sending
-  if (!email.includes("@") || !email.includes(".")) {
-    formStatus.textContent = "Please enter a valid institute email.";
-    formStatus.style.color = "red";
-    return;
-  }
+    // 3. Simple email syntax validation
+    if (!email.includes("@") || !email.includes(".")) {
+        formStatus.textContent = "Please enter a valid institute email.";
+        formStatus.style.color = "red";
+        return; 
+    }
 
-  formStatus.textContent = "Processing registration...";
-  formStatus.style.color = "orange";
+    // 4. Update status loader feedback for Day 1
+    formStatus.textContent = "Processing your registration... Please wait.";
+    formStatus.style.color = "#dfa638"; 
 
-  try {
-    // 3. Dispatch data across the network to your Cloudflare D1 Backend pipeline
-    const response = await fetch('/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name, email, department })
+    console.log("Form data captured cleanly:", { name, email, department });
+    
+    // ====== 🌟 DAY 2: THE GOOGLE SHEETS NETWORK BRIDGE ======
+    
+    // Paste your unique Google deployment link right here inside the quotes:
+    const googleWebAppUrl = "https://script.google.com/macros/s/AKfycbxdNoXHJMTZW2k8bihcTnRnoWscfyodmU33oOSNOJ3RSmG5Hrnw481M9PEAgILzP8bRIA/exec";
+
+    // Bundle the data parameters into a structured JSON string package
+    const payload = {
+        name: name,
+        email: email,
+        department: department,
+        year: "Second year" // Default placeholder matching your form options
+    };
+
+    // Dispatch the payload over the web network asynchronously
+    fetch(googleWebAppUrl, {
+        method: "POST",
+        mode: "no-cors", // Bypasses browser cross-origin policy roadblocks safely
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(() => {
+        // Once completed successfully:
+        formStatus.textContent = "Thank you for registering! Check your inbox for confirmation.";
+        formStatus.style.color = "green";
+        registrationForm.reset(); // Beautifully blanks out input inputs for the next student
+    })
+    .catch((error) => {
+        console.error("Network dispatch error encountered:", error);
+        formStatus.textContent = "Registration transmission issue. Please try again.";
+        formStatus.style.color = "red";
     });
-
-    const result = await response.json();
-
-    if (result.success) {
-      // 4. Safely display success state without refreshing
-      formStatus.textContent = `Thank you, ${name}. Your registration has been securely saved!`;
-      formStatus.style.color = "green";
-      registrationForm.reset();
-    } else {
-      throw new Error(result.error || "Server rejected save");
-    }
-  } catch (error) {
-    console.error("Database connection failed:", error);
-    formStatus.textContent = "Connection issue. Data could not be saved.";
-    formStatus.style.color = "red";
-  }
-});
-      registrationForm.reset();
-    } else {
-      throw new Error(result.error || "Server rejected save operation");
-    }
-  } catch (error) {
-    console.error("Database connection failed:", error);
-    formStatus.textContent = "Connection issue. Data could not be saved.";
-    formStatus.style.color = "red";
-  }
-});
-  formStatus.style.color = "orange";
-
-  try {
-    // This is the missing network bridge sending your payload data to functions/submit.js
-    const response = await fetch('/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name, email, department })
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-      formStatus.textContent = `Thank you, ${name}. Your registration has been securely saved!`;
-      formStatus.style.color = "green";
-      registrationForm.reset();
-    } else {
-      throw new Error(result.error || "Server rejected save operation");
-    }
-  } catch (error) {
-    console.error("Database connection failed:", error);
-    formStatus.textContent = "Connection issue. Data could not be saved.";
-    formStatus.style.color = "red";
-  }
 });
 
-saveButton.addEventListener("click", () => {
-  const nextSettings = collectEditorSettings();
-  updateLiveContent(nextSettings);
-  saveSettings(nextSettings);
-  editorStatus.textContent = "Saved in this browser.";
-});
 
-resetButton.addEventListener("click", () => {
-  localStorage.removeItem("startupWeekendSettings");
-  Object.assign(settings, defaults);
-  hydrateEditor(defaults);
-  updateLiveContent(defaults);
-  editorStatus.textContent = "Default content restored.";
-});
 
-hydrateEditor(settings);
-updateLiveContent(settings);
+   
