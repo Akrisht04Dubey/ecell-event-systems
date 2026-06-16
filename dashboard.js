@@ -10,6 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(students => {
             // 1. Update the total registration counter card
             totalCountElement.textContent = students.length;
+            // Dynamic Milestone Progress Calculation
+const targetMilestone = 150;
+const calculationPercentage = Math.min(((students.length / targetMilestone) * 100), 100).toFixed(1);
+const progressFill = document.getElementById("progress-fill");
+const progressText = document.getElementById("progress-text");
+
+// Delayed initialization for an elegant loading animation bar sweep
+setTimeout(() => {
+    if (progressFill && progressText) {
+        progressFill.style.width = `${calculationPercentage}%`;
+        progressText.textContent = `${calculationPercentage}% of Target Reached`;
+    }
+}, 400);
 
             // 2. Tally up the department counts automatically
             const deptCounts = {};
